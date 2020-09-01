@@ -1,12 +1,7 @@
 @import '../../../styles/settings.scss';
 
 .root {
-  .header {
+  .footer {
     background-color: $bkLightBrown;
-
-    .button {
-      background-color: $bkDeepGreen;
-      margin: 5px;
-    }
   }
 }

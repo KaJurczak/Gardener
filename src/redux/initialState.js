@@ -6,7 +6,7 @@ export const initialState = {
         title: 'hortensja',
         content: 'hortensja',
         photo: '',
-        price: 30,
+        price: 600,
       },
     ],
     loading: {
