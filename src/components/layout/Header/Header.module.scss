@@ -4,6 +4,13 @@
   .header {
     background-color: $bkLightBrown;
 
+    .logo {
+      text-decoration: none;
+      color: $bkDeepGreen;
+      font-size: 2*$base-size;
+      font-weight: 800;
+    }
+
     .button {
       background-color: $bkDeepGreen;
       margin: 5px;

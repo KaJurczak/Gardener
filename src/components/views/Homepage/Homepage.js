@@ -50,7 +50,7 @@ const Component = ({className, children, plants}) => {
           <GridList cellHeight={180} className={classes.gridList}>
             {plants.map((plant) => (
               <GridListTile key={plant.id} component={Link} to={`/plant/${plant.id}`}>
-                <img src={plant.photo} alt={plant.polishName} />
+                <img src={plant.photo[0]} alt={plant.polishName} />
                 <GridListTileBar
                   title={plant.polishName}
                   subtitle={<span>price: {plant.price}PLN</span>}

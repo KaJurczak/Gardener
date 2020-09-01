@@ -1,4 +1,9 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  margin-top: 20px;
+
+  .card {
+    padding: 10px;
+  }
+}
