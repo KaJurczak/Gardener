@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/plantsRedux';
 
-import styles from './Basket.module.scss';
+import styles from './Cart.module.scss';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -90,7 +90,6 @@ const Component = ({className, plants, value}) => {
                       <input type="number" min="1" max="10" value={value}>
                       </input>
                     </TableCell>
-                    {console.log()}
                     <TableCell align="right">{row.total}</TableCell>
                   </TableRow>
                 ))}
@@ -133,7 +132,7 @@ const mapStateToProps = state => ({
 const ContainerConnect = connect(mapStateToProps)(Component);
 
 export {
-  // Component as Basket,
-  ContainerConnect as Basket,
-  Component as BasketComponent,
+  // Component as Cart,
+  ContainerConnect as Cart,
+  Component as CartComponent,
 };

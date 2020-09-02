@@ -42,7 +42,7 @@ const Component = ({className, children}) => {
             GARDENER
           </Typography>
           {/* <Button color="inherit" className={styles.button}>OFERTA</Button> */}
-          <Button component={Link} to={'/basket'} color="inherit" className={styles.button}>KOSZYK</Button>
+          <Button component={Link} to={'/cart'} color="inherit" className={styles.button}>KOSZYK</Button>
         </Toolbar>
       </AppBar>
     </div>

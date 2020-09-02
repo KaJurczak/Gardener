@@ -5,6 +5,8 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/plantsRedux';
+import { addToCart } from '../../../redux/cartRedux';
+
 
 import styles from './Plant.module.scss';
 import Container from '@material-ui/core/Container';
@@ -30,9 +32,20 @@ const useStyles = makeStyles({
   },
 });
 
-const Component = ({className, plants, match}) => {
+const Component = ({className, plants, match, addToCart}) => {
   const classes = useStyles();
   const plant = plants.filter(plant => plant.id === match.params.id)[0];
+
+  const [value, setValue] = React.useState(0);
+  const onChange = ({ target }) => {
+    setValue(parseInt(target.value));
+  };
+
+  const sendToCart = (plant, value) => {
+    addToCart(plant, value);
+    // console.log('information was sending')
+    // console.log('plant', plant, 'value', value)
+  };
 
   return(
     <div className={clsx(className, styles.root)}>
@@ -69,10 +82,25 @@ const Component = ({className, plants, match}) => {
                     <Typography variant="body2" color="textSecondary" component="p">
                       {`${plant.content} (źródło:${plant.source})`}
                     </Typography>
+                    <br></br>
+                    <Typography gutterBottom  variant="h6" color="textSecondary" component="p">
+                      {`cena: ${plant.price}PLN`}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <input 
+                    type="number" 
+                    min="0" 
+                    max="10" 
+                    value={value} 
+                    onChange={onChange} />
+                  <Button 
+                    size="small" 
+                    color="primary"
+                    onClick={() => sendToCart(
+                      plant, value
+                    )}>
                     DODAJ DO KOSZYKA
                   </Button>
                 </CardActions>
@@ -90,17 +118,18 @@ Component.propTypes = {
   className: PropTypes.string,
   plants: PropTypes.array,
   match: PropTypes.object,
+  addToCart: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   plants: getAll(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  addToCart: (plantInformation, value) => dispatch(addToCart(plantInformation, value)),
+});
 
-const ContainerConnect = connect(mapStateToProps)(Component);
+const ContainerConnect = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Plant,
