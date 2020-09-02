@@ -10,6 +10,8 @@ import { store } from './redux/store';
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { Homepage } from './components/views/Homepage/Homepage';
 import { Plant } from './components/views/Plant/Plant';
+import { Basket } from './components/views/Basket/Basket';
+import { OrderForm } from './components/views/OrderForm/OrderForm';
 import { NotFound } from './components/views/NotFound/NotFound';
 
 
@@ -29,6 +31,8 @@ const App = () => (
             <Switch>
               <Route exact path='/' component={Homepage} />
               <Route exact path='/plant/:id' component={Plant} />
+              <Route exact path='/basket' component={Basket} />
+              <Route exact path='/orderForm' component={OrderForm} />
               <Route path='*' component={NotFound} />
             </Switch>
           </MainLayout>

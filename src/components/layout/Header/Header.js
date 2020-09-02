@@ -41,8 +41,8 @@ const Component = ({className, children}) => {
           <Typography className={clsx(classes.title, styles.logo)} component={Link} to={`/`} color="inherit" underline="hover">
             GARDENER
           </Typography>
-          <Button color="inherit" className={styles.button}>OFERTA</Button>
-          <Button color="inherit" className={styles.button}>KOSZYK</Button>
+          {/* <Button color="inherit" className={styles.button}>OFERTA</Button> */}
+          <Button component={Link} to={'/basket'} color="inherit" className={styles.button}>KOSZYK</Button>
         </Toolbar>
       </AppBar>
     </div>
