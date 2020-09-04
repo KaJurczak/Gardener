@@ -1,7 +1,7 @@
 // import Axios from 'axios';
 
 /* selectors */
-// export const getAll = ({plants}) => plants.data;
+export const getCart = ({cart}) => cart.products;
 
 /* action name creator */
 const reducerName = 'cart';
@@ -9,9 +9,11 @@ const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
 const ADD_TO_CART = createActionName('ADD_TO_CART');
+const CHANGE_VALUE = createActionName('CHANGE_VALUE');
 
 /* action creators */
 export const addToCart = (payload, value) => ({ payload, value, type: ADD_TO_CART });
+export const changeValue = (payload) => ({ payload, type: CHANGE_VALUE });
 
 /* thunk creators */
 
@@ -34,6 +36,15 @@ export const reducer = (statePart = [], action = {}) => {
       return {
         ...statePart,
         products: [{ ...action.payload, value: action.value}],
+      };
+    }
+    case CHANGE_VALUE: {
+      return {
+        ...statePart,
+        products: statePart.products.map((product) => {
+          if (product.id === action.payload.id) return { ...product, value: action.payload.value };
+          return product;
+        }),
       };
     }
     default:
