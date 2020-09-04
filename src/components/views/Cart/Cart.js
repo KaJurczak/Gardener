@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/plantsRedux';
-import { getCart, changeValue } from '../../../redux/cartRedux';
+import { getCart, changeValue, changeSelectValue } from '../../../redux/cartRedux';
 
 
 import styles from './Cart.module.scss';
@@ -42,9 +42,14 @@ function createData(name, colors, price, quantity, total, id) {
 class Component extends React.Component {
 
   render(){
-    const {className, classes, plantsInCart, changeValue} = this.props;
+    const {className, classes, plantsInCart, changeValue, changeSelectValue} = this.props;
 
     const rows = plantsInCart ? plantsInCart.map(plant => createData(plant.polishName, plant.colors, plant.price, plant.value, plant.value?plant.price*plant.value:plant.price*0, plant.id)) : [];
+
+    const changeSelect = (event, id) => {
+      event.preventDefault();
+      changeSelectValue({id, choosenColor: event.target.value});
+    };
 
     const changeInput = (event, id) => {
       event.preventDefault();
@@ -92,6 +97,8 @@ class Component extends React.Component {
                             id="demo-simple-select"
                             // value={row.colors}
                             // onChange={handleChange}
+                            onChange={e => changeSelect(e, row.id)}
+
                           >
                             {row.colors.map(choosenColor => 
                               <MenuItem key={choosenColor} value={choosenColor}>
@@ -137,9 +144,10 @@ class Component extends React.Component {
 
 Component.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.string,
-  plantsInCart: PropTypes.func,
+  classes: PropTypes.object,
+  plantsInCart: PropTypes.array,
   changeValue: PropTypes.func,
+  changeSelectValue: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -149,6 +157,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   changeValue: ({id, value}) => dispatch(changeValue({id, value})), 
+  changeSelectValue: ({id, choosenColor}) => dispatch(changeSelectValue({id, choosenColor})),
 });
 
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));

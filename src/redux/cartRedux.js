@@ -10,10 +10,12 @@ const createActionName = name => `app/${reducerName}/${name}`;
 /* action types */
 const ADD_TO_CART = createActionName('ADD_TO_CART');
 const CHANGE_VALUE = createActionName('CHANGE_VALUE');
+const CHANGE_SELECT = createActionName('CHANGE_SELECT');
 
 /* action creators */
 export const addToCart = (payload, value) => ({ payload, value, type: ADD_TO_CART });
 export const changeValue = (payload) => ({ payload, type: CHANGE_VALUE });
+export const changeSelectValue = (payload) => ({ payload, type: CHANGE_SELECT });
 
 /* thunk creators */
 
@@ -47,6 +49,16 @@ export const reducer = (statePart = [], action = {}) => {
         }),
       };
     }
+    case CHANGE_SELECT: {
+      return {
+        ...statePart,
+        products: statePart.products.map((product) => {
+          if (product.id === action.payload.id) return { ...product, choosenColor: action.payload.choosenColor };
+          return product;
+        }),
+      };
+    }
+
     default:
       return statePart;
   }
