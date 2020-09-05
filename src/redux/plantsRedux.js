@@ -1,7 +1,8 @@
-// import Axios from 'axios';
+import Axios from 'axios';
 
 /* selectors */
 export const getAll = ({plants}) => plants.data;
+export const getPlant = ({plants}) => plants.data;
 
 /* action name creator */
 const reducerName = 'posts';
@@ -18,7 +19,42 @@ export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
+export const fetchPlants = () => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+    console.log('thunk fetchPlants');
 
+    Axios
+      .get('http://localhost:8000/api/plants')
+      .then(res => {
+        dispatch(fetchSuccess(res.data));
+        console.log('res.data', res.data);
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+        console.log('err');
+      });
+  };
+};
+
+export const fetchSinglePlant = ( id ) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+    console.log('thunk fetchSinglePlants');
+
+    Axios
+      .get(`http://localhost:8000/api/plants/${id}`)
+      .then(res => {
+        dispatch(fetchSuccess(res.data));
+        console.log('res.data2', res.data);
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+        console.log('err2');
+
+      });
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
@@ -33,6 +69,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_SUCCESS: {
+      console.log('action.payload', action.payload);
       return {
         ...statePart,
         loading: {

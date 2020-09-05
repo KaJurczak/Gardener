@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getAll } from '../../../redux/plantsRedux';
+import { getPlant, fetchSinglePlant } from '../../../redux/plantsRedux';
 import { addToCart } from '../../../redux/cartRedux';
 
 
@@ -12,6 +12,7 @@ import styles from './Plant.module.scss';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -32,104 +33,131 @@ const useStyles = makeStyles({
   },
 });
 
-const Component = ({className, plants, match, addToCart}) => {
-  const classes = useStyles();
-  const plant = plants.filter(plant => plant.id === match.params.id)[0];
+class Component extends React.Component {
+  state = {
+    data: {
+      value: 0,
+    },
+  }
 
-  const [value, setValue] = React.useState(0);
-  const onChange = ({ target }) => {
-    setValue(parseInt(target.value));
-  };
+  async componentDidMount(){
+    const {fetchSinglePlant} = this.props;
+    const id = this.props.match.params.id;
+    await fetchSinglePlant(id);
+  }
 
-  const sendToCart = (plant, value) => {
-    addToCart(plant, value);
-    // console.log('information was sending')
-    // console.log('plant', plant, 'value', value)
-  };
+  render(){
+    const {className, singlePlant, addToCart, classes} = this.props;
+    const {value} = this.state.data;
 
-  return(
-    <div className={clsx(className, styles.root)}>
-      <Container maxWidth="sm" className={clsx(className, styles.root)}>
-        <Paper elevation={0} >
-          <Grid container spacing={2} className={styles.card}>
-            <Grid item xs={3}>
-              <GridList cellHeight={160} className={classes.gridList} cols={1}>
-                {plant.photo.map((image) => (
-                  <GridListTile key={image} cols={image.cols || 1}>
-                    <img src={image} alt={image} />
-                  </GridListTile>
-                ))}
-              </GridList>
+    console.log('singlePlant.photo', singlePlant.photo);
+    console.log('singlePlant', singlePlant);
+    console.log('value', value);
+
+    const changeInput = ( event ) => {
+      event.preventDefault();
+      const { data } = this.state;
+      this.setState({
+        data: {...data, value: event.target.value,
+        }});
+    };
+    
+    // {
+    // setValue(parseInt(target.value));
+    // };
+
+    const sendToCart = (singlePlant, value) => {
+      addToCart(singlePlant, value);
+    };
+
+    return(
+      <div className={clsx(className, styles.root)}>
+        <Container maxWidth="sm" className={clsx(className, styles.root)}>
+          <Paper elevation={0} >
+            <Grid container spacing={2} className={styles.card}>
+              <Grid item xs={3}>
+                <GridList cellHeight={160} className={classes.gridList} cols={1}>
+                  {singlePlant.photo ? (singlePlant.photo.map((image) => (
+                    <GridListTile key={image} cols={image.cols || 1}>
+                      <img src={image} alt={image} />
+                    </GridListTile>
+                  ))) : ''}
+                </GridList>
+              </Grid>
+              <Grid item xs={9}>
+                <Card className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image={singlePlant.photo ? singlePlant.photo[0] : ''}
+                      title={singlePlant.polishName}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {singlePlant.polishName}
+                      </Typography>
+                      <Typography gutterBottom  variant="subtitle1" color="textSecondary" component="p">
+                        {`(${singlePlant.latinName})`}
+                      </Typography>
+                      <Typography variant="subtitle1" color="textSecondary" component="p">
+                        {singlePlant.type}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        {`${singlePlant.content} (źródło:${singlePlant.source})`}
+                      </Typography>
+                      <br></br>
+                      <Typography gutterBottom  variant="h6" color="textSecondary" component="p">
+                        {`cena: ${singlePlant.price}PLN`}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <input 
+                      type="number" 
+                      min="0" 
+                      max="10" 
+                      value={value} 
+                      onChange={e => changeInput(e)} 
+                    />
+                    <Button 
+                      size="small" 
+                      color="primary"
+                      onClick={() => sendToCart(
+                        singlePlant, value
+                      )}
+                    >
+                      DODAJ DO KOSZYKA
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={9}>
-              <Card className={classes.root}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image={plant.photo[0]}
-                    title={plant.polishName}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {plant.polishName}
-                    </Typography>
-                    <Typography gutterBottom  variant="subtitle1" color="textSecondary" component="p">
-                      {`(${plant.latinName})`}
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary" component="p">
-                      {plant.type}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {`${plant.content} (źródło:${plant.source})`}
-                    </Typography>
-                    <br></br>
-                    <Typography gutterBottom  variant="h6" color="textSecondary" component="p">
-                      {`cena: ${plant.price}PLN`}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <input 
-                    type="number" 
-                    min="0" 
-                    max="10" 
-                    value={value} 
-                    onChange={onChange} />
-                  <Button 
-                    size="small" 
-                    color="primary"
-                    onClick={() => sendToCart(
-                      plant, value
-                    )}>
-                    DODAJ DO KOSZYKA
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
-    </div>
-  );
-};
+          </Paper>
+        </Container>
+      </div>
+    );
+  }
+}
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
-  plants: PropTypes.array,
+  classes: PropTypes.object,
+  singlePlant: PropTypes.node,
+  fetchSinglePlant: PropTypes.func,
   match: PropTypes.object,
   addToCart: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
-  plants: getAll(state),
+  singlePlant: getPlant(state),
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchSinglePlant: (id) => dispatch(fetchSinglePlant(id)),
   addToCart: (plantInformation, value) => dispatch(addToCart(plantInformation, value)),
 });
 
-const ContainerConnect = connect(mapStateToProps, mapDispatchToProps)(Component);
+const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));
 
 export {
   // Component as Plant,
