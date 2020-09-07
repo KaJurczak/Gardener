@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 class Component extends React.Component {
 
   async componentDidMount(){
+    // console.log('componentDidMount() at homepage');
     const {fetchPlants} = this.props;
     await fetchPlants();
   }

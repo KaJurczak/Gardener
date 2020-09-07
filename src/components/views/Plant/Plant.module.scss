@@ -5,5 +5,17 @@
 
   .card {
     padding: 10px;
+
+    .imageWrapper {
+      height: 15rem;
+      overflow: hidden;
+    }
+
+    .image{
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      transform: translateY(-25%);
+    }
   }
 }

@@ -1,22 +1,36 @@
 import Axios from 'axios';
 
 /* selectors */
-export const getAll = ({plants}) => plants.data;
-export const getPlant = ({plants}) => plants.data;
+export const getAll = ({plants}) => {
+  const allPlants = plants.data; 
+  console.log('allPlants', allPlants);
+  return allPlants;
+};
+export const getPlant = ({plants}, id) => {
+  const plant = plants.data.filter(plant => plant._id === id.match.params.id); 
+  console.log('plants in plantRedux', plants);
+  console.log('plant', plant);
+
+  return plant;
+};
 
 /* action name creator */
-const reducerName = 'posts';
+const reducerName = 'plants';
 const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
+const LOAD_PLANT = createActionName('LOAD_PLANT');
+
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
+export const loadPlant = payload => ({ payload, type: LOAD_PLANT });
+
 
 /* thunk creators */
 export const fetchPlants = () => {
@@ -45,7 +59,7 @@ export const fetchSinglePlant = ( id ) => {
     Axios
       .get(`http://localhost:8000/api/plants/${id}`)
       .then(res => {
-        dispatch(fetchSuccess(res.data));
+        dispatch(loadPlant(res.data));
         console.log('res.data2', res.data);
       })
       .catch(err => {
@@ -86,6 +100,17 @@ export const reducer = (statePart = [], action = {}) => {
           active: false,
           error: action.payload,
         },
+      };
+    }
+    case LOAD_PLANT: {
+      console.log('action.payload', action.payload);
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        singlePlant: action.payload,
       };
     }
     default:

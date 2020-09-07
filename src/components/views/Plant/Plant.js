@@ -17,7 +17,6 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -29,7 +28,7 @@ const useStyles = makeStyles({
     // maxWidth: 345,
   },
   media: {
-    height: 200,
+    height: 600,
   },
 });
 
@@ -41,18 +40,21 @@ class Component extends React.Component {
   }
 
   async componentDidMount(){
+    // console.log('componentDidMount() at plant');
     const {fetchSinglePlant} = this.props;
     const id = this.props.match.params.id;
     await fetchSinglePlant(id);
   }
 
   render(){
-    const {className, singlePlant, addToCart, classes} = this.props;
+    const {className, getSinglePlant, addToCart, classes} = this.props;
     const {value} = this.state.data;
 
-    console.log('singlePlant.photo', singlePlant.photo);
-    console.log('singlePlant', singlePlant);
-    console.log('value', value);
+    const singlePlant = getSinglePlant[0];
+
+    // const singlePlant2 = getAll.filter(plant => 
+    //   plant._id === this.props.match.params.id
+    // )
 
     const changeInput = ( event ) => {
       event.preventDefault();
@@ -61,10 +63,6 @@ class Component extends React.Component {
         data: {...data, value: event.target.value,
         }});
     };
-    
-    // {
-    // setValue(parseInt(target.value));
-    // };
 
     const sendToCart = (singlePlant, value) => {
       addToCart(singlePlant, value);
@@ -87,11 +85,9 @@ class Component extends React.Component {
               <Grid item xs={9}>
                 <Card className={classes.root}>
                   <CardActionArea>
-                    <CardMedia
-                      className={classes.media}
-                      image={singlePlant.photo ? singlePlant.photo[0] : ''}
-                      title={singlePlant.polishName}
-                    />
+                    <div className={styles.imageWrapper}>
+                      <img src={singlePlant.photo[0]} alt="alternative" className={styles.image}/>
+                    </div>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
                         {singlePlant.polishName}
@@ -146,16 +142,20 @@ Component.propTypes = {
   fetchSinglePlant: PropTypes.func,
   match: PropTypes.object,
   addToCart: PropTypes.func,
+  getSinglePlant: PropTypes.object,
 };
 
-const mapStateToProps = state => ({
-  singlePlant: getPlant(state),
+const mapStateToProps = (state, id) => ({
+  getSinglePlant: getPlant(state, id),
+  // getAll: getAll(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchSinglePlant: (id) => dispatch(fetchSinglePlant(id)),
   addToCart: (plantInformation, value) => dispatch(addToCart(plantInformation, value)),
 });
+
+// const ContainerConnect = connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles, { withTheme: true })(Component));
 
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));
 

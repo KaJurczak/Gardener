@@ -20,7 +20,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -134,7 +134,13 @@ class Component extends React.Component {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button component={Link} to={'/orderForm'} color="inherit" className={styles.button} >Zamawiam i płacę</Button>
+            <Button 
+              // component={Link} 
+              // to={'/orderForm'} 
+              color="inherit" 
+              className={styles.button} >
+              Zamawiam i płacę
+            </Button>
           </Paper>
         </Container>
       </div>

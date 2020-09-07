@@ -27,7 +27,9 @@ app.use('*', (req, res) => {
 });
 
 /* MONGOOSE */
-mongoose.connect('mongodb://localhost:27017/gardenerDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const dbURI = process.env.NODE_ENV === `production` ? `mongodb+srv://${process.env.NW_login}:${process.env.NW_password}@cluster0.iegdp.gcp.mongodb.net/gardenerDB?retryWrites=true&w=majority` : `mongodb://localhost:27017/gardenerDB`;
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
