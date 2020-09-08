@@ -5,8 +5,8 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/plantsRedux';
-import { getCart, changeValue, changeSelectValue } from '../../../redux/cartRedux';
-
+import { getCart, changeValue, changeSelectValue} from '../../../redux/cartRedux';
+// import { getCartFromLocalSt, setCartToLocalSt } from '../../../redux/cartRedux';
 
 import styles from './Cart.module.scss';
 import Container from '@material-ui/core/Container';
@@ -40,6 +40,13 @@ function createData(name, colors, price, quantity, total, id) {
 }
 
 class Component extends React.Component {
+  componentDidMount() {
+    // this.props.getCartFromLocalSt();
+  }
+
+  // componentDidUpdate() {
+  //   this.props.setCartToLocalSt(this.props.plantsInCart);
+  // }
 
   render(){
     const {className, classes, plantsInCart, changeValue, changeSelectValue} = this.props;
@@ -164,6 +171,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   changeValue: ({id, value}) => dispatch(changeValue({id, value})), 
   changeSelectValue: ({id, choosenColor}) => dispatch(changeSelectValue({id, choosenColor})),
+  // setCartToLocalSt: (cart) => dispatch(setCartToLocalSt(cart)),
+  // getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
 });
 
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));

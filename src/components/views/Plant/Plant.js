@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getPlant, fetchSinglePlant } from '../../../redux/plantsRedux';
-import { addToCart } from '../../../redux/cartRedux';
+import { addToCart, setCartToLocalSt } from '../../../redux/cartRedux';
 
 
 import styles from './Plant.module.scss';
@@ -66,6 +66,8 @@ class Component extends React.Component {
 
     const sendToCart = (singlePlant, value) => {
       addToCart(singlePlant, value);
+      // this.props.setCartToLocalSt(singlePlant);
+
     };
 
     return(
@@ -153,6 +155,7 @@ const mapStateToProps = (state, id) => ({
 const mapDispatchToProps = dispatch => ({
   fetchSinglePlant: (id) => dispatch(fetchSinglePlant(id)),
   addToCart: (plantInformation, value) => dispatch(addToCart(plantInformation, value)),
+  setCartToLocalSt: (getSinglePlant) => dispatch(setCartToLocalSt(getSinglePlant)),
 });
 
 // const ContainerConnect = connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles, { withTheme: true })(Component));
