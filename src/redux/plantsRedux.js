@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { API_URL } from '../config';
 
 /* selectors */
 export const getAll = ({plants}) => {
@@ -39,7 +40,7 @@ export const fetchPlants = () => {
     console.log('thunk fetchPlants');
 
     Axios
-      .get('http://localhost:8000/api/plants')
+      .get(`${API_URL}/plants`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
         console.log('res.data', res.data);
@@ -57,7 +58,7 @@ export const fetchSinglePlant = ( id ) => {
     console.log('thunk fetchSinglePlants');
 
     Axios
-      .get(`http://localhost:8000/api/plants/${id}`)
+      .get(`${API_URL}/plants/${id}`)
       .then(res => {
         dispatch(loadPlant(res.data));
         console.log('res.data2', res.data);
