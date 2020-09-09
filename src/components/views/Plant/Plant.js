@@ -136,9 +136,9 @@ class Component extends React.Component {
           <div className={clsx(className, styles.root)}>
             <Container maxWidth="sm" className={clsx(className, styles.root)}>
               <Paper elevation={0} >
-                <Typography gutterBottom variant="h5" component="h2">
-                  Strona z rośliną jest pusta. Wróć prosze do strony głównej
-                </Typography>
+                <h2>
+                  Strona jest pusta. Wróć proszę do strony głównej
+                </h2>
                 <Typography className={clsx(classes.title, styles.logo)} component={Link} to={`/`} color="inherit" underline="hover">
                   GARDENER
                 </Typography>

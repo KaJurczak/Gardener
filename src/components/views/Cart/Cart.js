@@ -69,88 +69,98 @@ class Component extends React.Component {
       const total = sum.reduce((a, b) => a + b, 0); //get sum of array elements
       return total;
     };
-    
+
     return(
-      <div className={clsx(className, styles.root)}>
-        <Container maxWidth="sm" className={clsx(className, styles.root)}>
-          <Paper elevation={0} >
-            <h2>Koszyk</h2>
-            <TableContainer component={Paper}>
-              <Table 
-                className={classes.table} 
-                size="small" 
-                aria-label="a dense table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Roślina</TableCell>
-                    <TableCell align="right">Kolor kwiatów</TableCell>
-                    <TableCell align="right">Cena (PLN)</TableCell>
-                    <TableCell align="right">Ilość</TableCell>
-                    <TableCell align="right">Cena całkowita (PLN)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row) => (
-                    <TableRow key={row.name}>
-                      <TableCell component="th" scope="row">
-                        {row.name}
-                      </TableCell>
-                      <TableCell>
-                        <FormControl 
-                          className={classes.formControl}
-                        >
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            // value={row.colors}
-                            // onChange={handleChange}
-                            onChange={e => changeSelect(e, row.id)}
-
-                          >
-                            {row.colors.map(choosenColor => 
-                              <MenuItem key={choosenColor} value={choosenColor}>
-                                {choosenColor}
-                              </MenuItem>
-                            )}
-                          </Select>
-                        </FormControl>
-                      </TableCell>
-                      <TableCell align="right">{row.price}</TableCell>
-                      <TableCell align="right">
-                        <input 
-                          type="number" 
-                          min="1" 
-                          max="10" 
-                          value={row.quantity}
-                          onChange={e => changeInput(e, row.id)}
-                        />
-                      </TableCell>
-                      <TableCell align="right">{row.total}</TableCell>
+      (rows.length !== 0) ? (
+        <div className={clsx(className, styles.root)}>
+          <Container maxWidth="sm" className={clsx(className, styles.root)}>
+            <Paper elevation={0} >
+              <h2>Koszyk</h2>
+              <TableContainer component={Paper}>
+                <Table 
+                  className={classes.table} 
+                  size="small" 
+                  aria-label="a dense table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Roślina</TableCell>
+                      <TableCell align="right">Kolor kwiatów</TableCell>
+                      <TableCell align="right">Cena (PLN)</TableCell>
+                      <TableCell align="right">Ilość</TableCell>
+                      <TableCell align="right">Cena całkowita (PLN)</TableCell>
                     </TableRow>
-                  ))}
-                  <TableRow key="suma">
-                    <TableCell component="th" scope="row">
-                      SUMA
-                    </TableCell>
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right">{totalPrice()}</TableCell>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell>
+                          <FormControl 
+                            className={classes.formControl}
+                          >
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              // value={row.colors}
+                              // onChange={handleChange}
+                              onChange={e => changeSelect(e, row.id)}
 
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Button 
-              // component={Link} 
-              // to={'/orderForm'} 
-              color="inherit" 
-              className={styles.button} >
-              Zamawiam i płacę
-            </Button>
-          </Paper>
-        </Container>
-      </div>
+                            >
+                              {row.colors.map(choosenColor => 
+                                <MenuItem key={choosenColor} value={choosenColor}>
+                                  {choosenColor}
+                                </MenuItem>
+                              )}
+                            </Select>
+                          </FormControl>
+                        </TableCell>
+                        <TableCell align="right">{row.price}</TableCell>
+                        <TableCell align="right">
+                          <input 
+                            type="number" 
+                            min="1" 
+                            max="10" 
+                            value={row.quantity}
+                            onChange={e => changeInput(e, row.id)}
+                          />
+                        </TableCell>
+                        <TableCell align="right">{row.total}</TableCell>
+                      </TableRow>
+                    ))}
+                    <TableRow key="suma">
+                      <TableCell component="th" scope="row">
+                        SUMA
+                      </TableCell>
+                      <TableCell align="right"></TableCell>
+                      <TableCell align="right"></TableCell>
+                      <TableCell align="right"></TableCell>
+                      <TableCell align="right">{totalPrice()}</TableCell>
+
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <Button 
+                // component={Link} 
+                // to={'/orderForm'} 
+                color="inherit" 
+                className={styles.button} >
+                Zamawiam i płacę
+              </Button>
+            </Paper>
+          </Container>
+        </div>
+      ) : (
+        <div className={clsx(className, styles.root)}>
+          <Container maxWidth="sm" className={clsx(className, styles.root)}>
+            <Paper elevation={0} >
+              <h2>Twój koszyk jest pusty</h2>
+            </Paper>
+          </Container>
+        </div>
+      )
     );
   }
 }
