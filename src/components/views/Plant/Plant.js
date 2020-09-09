@@ -22,6 +22,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import { Link } from 'react-router-dom';
+
 
 const useStyles = makeStyles({
   root: {
@@ -52,10 +54,6 @@ class Component extends React.Component {
 
     const singlePlant = getSinglePlant[0];
 
-    // const singlePlant2 = getAll.filter(plant => 
-    //   plant._id === this.props.match.params.id
-    // )
-
     const changeInput = ( event ) => {
       event.preventDefault();
       const { data } = this.state;
@@ -67,72 +65,87 @@ class Component extends React.Component {
     const sendToCart = (singlePlant, value) => {
       addToCart(singlePlant, value);
       // this.props.setCartToLocalSt(singlePlant);
-
     };
 
     return(
-      <div className={clsx(className, styles.root)}>
-        <Container maxWidth="sm" className={clsx(className, styles.root)}>
-          <Paper elevation={0} >
-            <Grid container spacing={2} className={styles.card}>
-              <Grid item xs={3}>
-                <GridList cellHeight={160} className={classes.gridList} cols={1}>
-                  {singlePlant.photo ? (singlePlant.photo.map((image) => (
-                    <GridListTile key={image} cols={image.cols || 1}>
-                      <img src={image} alt={image} />
-                    </GridListTile>
-                  ))) : ''}
-                </GridList>
-              </Grid>
-              <Grid item xs={9}>
-                <Card className={classes.root}>
-                  <CardActionArea>
-                    <div className={styles.imageWrapper}>
-                      <img src={singlePlant.photo[0]} alt="alternative" className={styles.image}/>
-                    </div>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {singlePlant.polishName}
-                      </Typography>
-                      <Typography gutterBottom  variant="subtitle1" color="textSecondary" component="p">
-                        {`(${singlePlant.latinName})`}
-                      </Typography>
-                      <Typography variant="subtitle1" color="textSecondary" component="p">
-                        {singlePlant.type}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {`${singlePlant.content} (źródło:${singlePlant.source})`}
-                      </Typography>
-                      <br></br>
-                      <Typography gutterBottom  variant="h6" color="textSecondary" component="p">
-                        {`cena: ${singlePlant.price}PLN`}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <input 
-                      type="number" 
-                      min="0" 
-                      max="10" 
-                      value={value} 
-                      onChange={e => changeInput(e)} 
-                    />
-                    <Button 
-                      size="small" 
-                      color="primary"
-                      onClick={() => sendToCart(
-                        singlePlant, value
-                      )}
-                    >
-                      DODAJ DO KOSZYKA
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Container>
-      </div>
+      getSinglePlant[0] ? 
+        (
+          <div className={clsx(className, styles.root)}>
+            <Container maxWidth="sm" className={clsx(className, styles.root)}>
+              <Paper elevation={0} >
+                <Grid container spacing={2} className={styles.card}>
+                  <Grid item xs={3}>
+                    <GridList cellHeight={160} className={classes.gridList} cols={1}>
+                      {singlePlant.photo ? (singlePlant.photo.map((image) => (
+                        <GridListTile key={image} cols={image.cols || 1}>
+                          <img src={image} alt={image} />
+                        </GridListTile>
+                      ))) : ''}
+                    </GridList>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <Card className={classes.root}>
+                      <CardActionArea>
+                        <div className={styles.imageWrapper}>
+                          <img src={singlePlant.photo[0]} alt="alternative" className={styles.image}/>
+                        </div>
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            {singlePlant.polishName}
+                          </Typography>
+                          <Typography gutterBottom  variant="subtitle1" color="textSecondary" component="p">
+                            {`(${singlePlant.latinName})`}
+                          </Typography>
+                          <Typography variant="subtitle1" color="textSecondary" component="p">
+                            {singlePlant.type}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary" component="p">
+                            {`${singlePlant.content} (źródło:${singlePlant.source})`}
+                          </Typography>
+                          <br></br>
+                          <Typography gutterBottom  variant="h6" color="textSecondary" component="p">
+                            {`cena: ${singlePlant.price}PLN`}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions>
+                        <input 
+                          type="number" 
+                          min="0" 
+                          max="10" 
+                          value={value} 
+                          onChange={e => changeInput(e)} 
+                        />
+                        <Button 
+                          size="small" 
+                          color="primary"
+                          onClick={() => sendToCart(
+                            singlePlant, value
+                          )}
+                        >
+                          DODAJ DO KOSZYKA
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Container>
+          </div>
+        ) : (
+          <div className={clsx(className, styles.root)}>
+            <Container maxWidth="sm" className={clsx(className, styles.root)}>
+              <Paper elevation={0} >
+                <Typography gutterBottom variant="h5" component="h2">
+                  Strona z rośliną jest pusta. Wróć prosze do strony głównej
+                </Typography>
+                <Typography className={clsx(classes.title, styles.logo)} component={Link} to={`/`} color="inherit" underline="hover">
+                  GARDENER
+                </Typography>
+              </Paper>
+            </Container>
+          </div>
+        ) 
     );
   }
 }
