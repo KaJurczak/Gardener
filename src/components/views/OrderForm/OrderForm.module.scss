@@ -1,4 +1,14 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  .buttonWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .button {
+    background-color: $bkDeepGreen;
+    margin-top: 20px;
+  }
+}
