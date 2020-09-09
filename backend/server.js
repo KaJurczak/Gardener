@@ -34,10 +34,10 @@ const dbURI = process.env.NODE_ENV === `production` ? `mongodb+srv://${process.e
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
-app.use(session({ 
-  secret: 'ciiiiicho',
-  store: new MongoStore({ mongooseConnection: db }),
-})); // init session mechanism
+// app.use(session({ 
+//   secret: 'ciiiiicho',
+//   store: new MongoStore({ mongooseConnection: db }),
+// })); // init session mechanism
 
 db.once('open', () => {
   console.log('Successfully connected to the database');
