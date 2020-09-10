@@ -5,7 +5,6 @@ const Plant = require('../models/plant.model');
 
 router.get('/plants', async (req, res) => {
   try {
-    // console.log('get /plants started');
     const result = await Plant
       .find();
       // .select('polishName photo price');
@@ -19,12 +18,10 @@ router.get('/plants', async (req, res) => {
 
 router.get('/plants/:id', async (req, res) => {
   try {
-    // console.log('plants.id');
-    // console.log('get /plants/:id started');
     const result = await Plant
       .findById(req.params.id);
     if(!result) res.status(404).json({ post: 'Not found' });
-    else {res.json(result); console.log('req.param', req.params.id);}
+    else {res.json(result);}
   }
   catch(err) {
     res.status(500).json(err);

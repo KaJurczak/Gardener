@@ -123,7 +123,6 @@ class Component extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
               id="dodatkoweInfo"
               name="dodatkoweInfo"
               label="Dodatkowe informacje"

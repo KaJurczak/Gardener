@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getPlant, fetchSinglePlant } from '../../../redux/plantsRedux';
+import { getAll, fetchPlants } from '../../../redux/plantsRedux';
 import { addToCart, setCartToLocalSt } from '../../../redux/cartRedux';
 
 
@@ -42,18 +42,15 @@ class Component extends React.Component {
   }
 
   async componentDidMount(){
-    // console.log('componentDidMount() at plant');
-    const {fetchSinglePlant} = this.props;
-    const id = this.props.match.params.id;
-    await fetchSinglePlant(id);
+    await this.props.fetchPlants();
   }
 
   render(){
-    const {className, getSinglePlant, addToCart, classes} = this.props;
+    const {className, addToCart, classes, plants} = this.props;
     const {value} = this.state.data;
 
-    const singlePlant = getSinglePlant[0];
-
+    const singlePlant = plants.filter(plant => plant._id === this.props.match.params.id)[0];
+    
     const changeInput = ( event ) => {
       event.preventDefault();
       const { data } = this.state;
@@ -68,7 +65,7 @@ class Component extends React.Component {
     };
 
     return(
-      getSinglePlant[0] ? 
+      plants.length !== 0 ? 
         (
           <div className={clsx(className, styles.root)}>
             <Container maxWidth="sm" className={clsx(className, styles.root)}>
@@ -153,30 +150,25 @@ class Component extends React.Component {
 Component.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object,
-  singlePlant: PropTypes.node,
-  fetchSinglePlant: PropTypes.func,
+  plants: PropTypes.array,
   match: PropTypes.object,
+  fetchPlants: PropTypes.func,
   addToCart: PropTypes.func,
-  getSinglePlant: PropTypes.object,
 };
 
 const mapStateToProps = (state, id) => ({
-  getSinglePlant: getPlant(state, id),
-  // getAll: getAll(state),
+  plants: getAll(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchSinglePlant: (id) => dispatch(fetchSinglePlant(id)),
+  fetchPlants: () => dispatch(fetchPlants()),
   addToCart: (plantInformation, value) => dispatch(addToCart(plantInformation, value)),
   setCartToLocalSt: (getSinglePlant) => dispatch(setCartToLocalSt(getSinglePlant)),
 });
 
-// const ContainerConnect = connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles, { withTheme: true })(Component));
-
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));
 
 export {
-  // Component as Plant,
   ContainerConnect as Plant,
   Component as PlantComponent,
 };

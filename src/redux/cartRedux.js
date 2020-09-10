@@ -60,7 +60,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_SUCCESS: {
-      console.log('action.payload at cartRedux - success', action.payload);
+      // console.log('action.payload at cartRedux - success', action.payload);
       return {
         ...statePart,
         loading: {
@@ -71,8 +71,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ERROR: {
-      console.log('action.payload at cartRedux - err', action.payload);
-
+      // console.log('action.payload at cartRedux - err', action.payload);
       return {
         ...statePart,
         loading: {

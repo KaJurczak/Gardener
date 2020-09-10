@@ -41,6 +41,7 @@ class Component extends React.Component {
     // console.log('componentDidMount() at homepage');
     const {fetchPlants} = this.props;
     await fetchPlants();
+    await this.props.plants;
   }
 
   render(){
