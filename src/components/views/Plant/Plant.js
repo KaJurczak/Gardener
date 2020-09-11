@@ -60,8 +60,10 @@ class Component extends React.Component {
     };
 
     const sendToCart = async (singlePlant, value) => {
-      await addToCart(singlePlant, value);
-      this.props.setCartToLocalSt(singlePlant, value);
+      if(value !== 0){
+        await addToCart(singlePlant, value);
+        this.props.setCartToLocalSt(singlePlant, value);
+      } else {alert('nie wpisałeś ilości roślin');}
     };
 
     return(

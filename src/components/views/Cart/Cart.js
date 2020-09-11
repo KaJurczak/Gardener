@@ -46,7 +46,7 @@ class Component extends React.Component {
 
   componentDidUpdate() {
     this.props.changeCartInLocalSt(this.props.plantsInCart);
-    console.log('this.props.plantsInCart', this.props.plantsInCart);
+    // console.log('this.props.plantsInCart', this.props.plantsInCart);
   }
 
   render(){

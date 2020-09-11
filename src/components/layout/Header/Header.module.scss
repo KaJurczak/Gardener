@@ -1,8 +1,14 @@
+  
 @import '../../../styles/settings.scss';
 
 .root {
   .header {
     background-color: $bkLightBrown;
+    
+    .buttonWrapper {
+      // display: flex;
+      justify-content: space-between;
+    }
 
     .logo {
       text-decoration: none;
