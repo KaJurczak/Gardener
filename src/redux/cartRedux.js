@@ -15,6 +15,8 @@ const FETCH_ERROR = createActionName('FETCH_ERROR');
 const ADD_TO_CART = createActionName('ADD_TO_CART');
 const CHANGE_VALUE = createActionName('CHANGE_VALUE');
 const CHANGE_SELECT = createActionName('CHANGE_SELECT');
+const REMOVE_PRODUCT = createActionName('REMOVE_PRODUCT');
+
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -24,6 +26,8 @@ export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const addToCart = (payload, value) => ({ payload, value, type: ADD_TO_CART });
 export const changeValue = (payload) => ({ payload, type: CHANGE_VALUE });
 export const changeSelectValue = (payload) => ({ payload, type: CHANGE_SELECT });
+export const removeProduct = (payload) => ({ payload, type: REMOVE_PRODUCT });
+
 
 /* thunk creators */
 
@@ -112,6 +116,13 @@ export const reducer = (statePart = [], action = {}) => {
         }),
       };
     }
+    case REMOVE_PRODUCT: {
+      return {
+        ...statePart,
+        data: statePart.data.filter((item) => item._id !== action.payload),
+      };
+    }
+
 
     default:
       return statePart;

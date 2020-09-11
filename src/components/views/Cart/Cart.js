@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/plantsRedux';
-import { getCart, changeValue, changeSelectValue} from '../../../redux/cartRedux';
+import { getCart, changeValue, changeSelectValue, removeProduct } from '../../../redux/cartRedux';
 import { getCartFromLocalSt, changeCartInLocalSt } from '../../../redux/cartRedux';
 
 import styles from './Cart.module.scss';
@@ -24,6 +24,7 @@ import { Link } from 'react-router-dom';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -50,7 +51,7 @@ class Component extends React.Component {
   }
 
   render(){
-    const {className, classes, plantsInCart, changeValue, changeSelectValue} = this.props;
+    const {className, classes, plantsInCart, changeValue, changeSelectValue, removeProduct} = this.props;
 
     const rows = plantsInCart ? plantsInCart.map(plant => createData(plant.polishName, plant.colors, plant.price, plant.value, plant.value?plant.price*plant.value:plant.price*0, plant._id)) : [];
 
@@ -62,6 +63,10 @@ class Component extends React.Component {
     const changeInput = (event, _id) => {
       event.preventDefault();
       changeValue({_id, value: parseInt(event.target.value)});
+    };
+
+    const removePlant = (_id) => {
+      removeProduct(_id);
     };
 
     const totalPrice = () => {
@@ -85,10 +90,11 @@ class Component extends React.Component {
                   <TableHead>
                     <TableRow>
                       <TableCell>Roślina</TableCell>
-                      <TableCell align="right">Kolor kwiatów</TableCell>
-                      <TableCell align="right">Cena (PLN)</TableCell>
-                      <TableCell align="right">Ilość</TableCell>
-                      <TableCell align="right">Cena całkowita (PLN)</TableCell>
+                      <TableCell align="center">Kolor kwiatów</TableCell>
+                      <TableCell align="center">Cena (PLN)</TableCell>
+                      <TableCell align="center">Ilość</TableCell>
+                      <TableCell align="center">Usuń</TableCell>
+                      <TableCell align="center">Cena całkowita (PLN)</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -106,7 +112,6 @@ class Component extends React.Component {
                               id="demo-simple-select"
                               // defaultValue={row.choosenColor ? row.choosenColor : row.colors}
                               onChange={e => changeSelect(e, row._id)}
-
                             >
                               {row.colors.map(choosenColor => 
                                 <MenuItem key={choosenColor} value={choosenColor}>
@@ -116,8 +121,8 @@ class Component extends React.Component {
                             </Select>
                           </FormControl>
                         </TableCell>
-                        <TableCell align="right">{row.price}</TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">{row.price}</TableCell>
+                        <TableCell align="center">
                           <input 
                             type="number" 
                             min="1" 
@@ -126,17 +131,26 @@ class Component extends React.Component {
                             onChange={e => changeInput(e, row._id)}
                           />
                         </TableCell>
-                        <TableCell align="right">{row.total}</TableCell>
+                        <TableCell align="center">
+                          <Button
+                            color="inherit"
+                            onClick={() => removePlant(row._id)}
+                          >
+                            <DeleteIcon />
+                          </Button>
+                        </TableCell>
+                        <TableCell align="center">{row.total}</TableCell>
                       </TableRow>
                     ))}
                     <TableRow key="suma">
                       <TableCell component="th" scope="row">
                         SUMA
                       </TableCell>
-                      <TableCell align="right"></TableCell>
-                      <TableCell align="right"></TableCell>
-                      <TableCell align="right"></TableCell>
-                      <TableCell align="right">{totalPrice()}</TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center">{totalPrice()}</TableCell>
 
                     </TableRow>
                   </TableBody>
@@ -173,6 +187,7 @@ Component.propTypes = {
   changeSelectValue: PropTypes.func,
   getCartFromLocalSt: PropTypes.func,
   changeCartInLocalSt: PropTypes.func,
+  removeProduct: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -185,6 +200,7 @@ const mapDispatchToProps = dispatch => ({
   changeSelectValue: ({_id, choosenColor}) => dispatch(changeSelectValue({_id, choosenColor})),
   getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
   changeCartInLocalSt: (cart) => dispatch(changeCartInLocalSt(cart)),
+  removeProduct: (_id) => dispatch(removeProduct(_id)),
 });
 
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));
