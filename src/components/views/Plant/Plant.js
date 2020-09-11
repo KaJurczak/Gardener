@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll, fetchPlants } from '../../../redux/plantsRedux';
-import { addToCart, setCartToLocalSt } from '../../../redux/cartRedux';
+import { addToCart, setCartToLocalSt, getCart } from '../../../redux/cartRedux';
 
 
 import styles from './Plant.module.scss';
@@ -59,9 +59,9 @@ class Component extends React.Component {
         }});
     };
 
-    const sendToCart = (singlePlant, value) => {
-      addToCart(singlePlant, value);
-      // this.props.setCartToLocalSt(singlePlant);
+    const sendToCart = async (singlePlant, value) => {
+      await addToCart(singlePlant, value);
+      this.props.setCartToLocalSt(singlePlant, value);
     };
 
     return(
@@ -154,16 +154,18 @@ Component.propTypes = {
   match: PropTypes.object,
   fetchPlants: PropTypes.func,
   addToCart: PropTypes.func,
+  setCartToLocalSt: PropTypes.func,
 };
 
 const mapStateToProps = (state, id) => ({
   plants: getAll(state),
+  getCart: getCart(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchPlants: () => dispatch(fetchPlants()),
   addToCart: (plantInformation, value) => dispatch(addToCart(plantInformation, value)),
-  setCartToLocalSt: (getSinglePlant) => dispatch(setCartToLocalSt(getSinglePlant)),
+  setCartToLocalSt: (cart, value) => dispatch(setCartToLocalSt(cart, value)),
 });
 
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));

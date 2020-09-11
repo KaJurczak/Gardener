@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/plantsRedux';
 import { getCart, changeValue, changeSelectValue} from '../../../redux/cartRedux';
-// import { getCartFromLocalSt, setCartToLocalSt } from '../../../redux/cartRedux';
+import { getCartFromLocalSt, changeCartInLocalSt } from '../../../redux/cartRedux';
 
 import styles from './Cart.module.scss';
 import Container from '@material-ui/core/Container';
@@ -35,32 +35,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(name, colors, price, quantity, total, id) {
-  return { name, colors, price, quantity, total, id };
+function createData(name, colors, price, quantity, total, _id) {
+  return { name, colors, price, quantity, total, _id };
 }
 
 class Component extends React.Component {
   componentDidMount() {
-    // this.props.getCartFromLocalSt();
+    this.props.getCartFromLocalSt();
   }
 
-  // componentDidUpdate() {
-  //   this.props.setCartToLocalSt(this.props.plantsInCart);
-  // }
+  componentDidUpdate() {
+    this.props.changeCartInLocalSt(this.props.plantsInCart);
+    console.log('this.props.plantsInCart', this.props.plantsInCart);
+  }
 
   render(){
     const {className, classes, plantsInCart, changeValue, changeSelectValue} = this.props;
 
-    const rows = plantsInCart ? plantsInCart.map(plant => createData(plant.polishName, plant.colors, plant.price, plant.value, plant.value?plant.price*plant.value:plant.price*0, plant.id)) : [];
+    const rows = plantsInCart ? plantsInCart.map(plant => createData(plant.polishName, plant.colors, plant.price, plant.value, plant.value?plant.price*plant.value:plant.price*0, plant._id)) : [];
 
-    const changeSelect = (event, id) => {
+    const changeSelect = (event, _id) => {
       event.preventDefault();
-      changeSelectValue({id, choosenColor: event.target.value});
+      changeSelectValue({_id, choosenColor: event.target.value});
     };
 
-    const changeInput = (event, id) => {
+    const changeInput = (event, _id) => {
       event.preventDefault();
-      changeValue({id, value: parseInt(event.target.value)});
+      changeValue({_id, value: parseInt(event.target.value)});
     };
 
     const totalPrice = () => {
@@ -103,9 +104,8 @@ class Component extends React.Component {
                             <Select
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
-                              // value={row.colors}
-                              // onChange={handleChange}
-                              onChange={e => changeSelect(e, row.id)}
+                              // defaultValue={row.choosenColor ? row.choosenColor : row.colors}
+                              onChange={e => changeSelect(e, row._id)}
 
                             >
                               {row.colors.map(choosenColor => 
@@ -123,7 +123,7 @@ class Component extends React.Component {
                             min="1" 
                             max="10" 
                             value={row.quantity}
-                            onChange={e => changeInput(e, row.id)}
+                            onChange={e => changeInput(e, row._id)}
                           />
                         </TableCell>
                         <TableCell align="right">{row.total}</TableCell>
@@ -171,6 +171,8 @@ Component.propTypes = {
   plantsInCart: PropTypes.array,
   changeValue: PropTypes.func,
   changeSelectValue: PropTypes.func,
+  getCartFromLocalSt: PropTypes.func,
+  changeCartInLocalSt: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -179,10 +181,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeValue: ({id, value}) => dispatch(changeValue({id, value})), 
-  changeSelectValue: ({id, choosenColor}) => dispatch(changeSelectValue({id, choosenColor})),
-  // setCartToLocalSt: (cart) => dispatch(setCartToLocalSt(cart)),
-  // getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
+  changeValue: ({_id, value}) => dispatch(changeValue({_id, value})), 
+  changeSelectValue: ({_id, choosenColor}) => dispatch(changeSelectValue({_id, choosenColor})),
+  getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
+  changeCartInLocalSt: (cart) => dispatch(changeCartInLocalSt(cart)),
 });
 
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));

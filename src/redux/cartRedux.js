@@ -1,7 +1,7 @@
 // import Axios from 'axios';
 
 /* selectors */
-export const getCart = ({cart}) => cart.products;
+export const getCart = ({cart}) => cart.data;
 
 /* action name creator */
 const reducerName = 'cart';
@@ -26,11 +26,20 @@ export const changeValue = (payload) => ({ payload, type: CHANGE_VALUE });
 export const changeSelectValue = (payload) => ({ payload, type: CHANGE_SELECT });
 
 /* thunk creators */
-export const setCartToLocalSt = (cart) => {
-  console.log('cart', cart);
 
-  localStorage.setItem('cart', JSON.stringify(cart));
+export const setCartToLocalSt = (cart, value) => () => {
+  const createObject = {...cart, value};
+  let arr = [];
+  arr = JSON.parse(localStorage.getItem('cart')) || [];
+  const newArr = arr.filter(a => a._id !== createObject._id);
+  newArr.push(createObject);
+  localStorage.setItem(`cart`, JSON.stringify(newArr));
 };
+
+export const changeCartInLocalSt = (cart) => () => {
+  localStorage.setItem(`cart`, JSON.stringify(cart));
+};
+
 
 // export const getCartFromLocalSt = () => {
 //   return (dispatch) => {
@@ -44,8 +53,6 @@ export const getCartFromLocalSt = () => {
   return (dispatch) => {
     dispatch(fetchSuccess(JSON.parse(localStorage.getItem('cart'))));
   };};
-  
-
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
@@ -101,8 +108,8 @@ export const reducer = (statePart = [], action = {}) => {
     case CHANGE_VALUE: {
       return {
         ...statePart,
-        products: statePart.products.map((product) => {
-          if (product.id === action.payload.id) return { ...product, value: action.payload.value };
+        data: statePart.data.map((product) => {
+          if (product._id === action.payload._id) return { ...product, value: action.payload.value };
           return product;
         }),
       };
@@ -110,8 +117,8 @@ export const reducer = (statePart = [], action = {}) => {
     case CHANGE_SELECT: {
       return {
         ...statePart,
-        products: statePart.products.map((product) => {
-          if (product.id === action.payload.id) return { ...product, choosenColor: action.payload.choosenColor };
+        data: statePart.data.map((product) => {
+          if (product._id === action.payload._id) return { ...product, choosenColor: action.payload.choosenColor };
           return product;
         }),
       };
