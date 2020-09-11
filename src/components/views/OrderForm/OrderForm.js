@@ -132,7 +132,7 @@ class Component extends React.Component {
         <div className={clsx(className, styles.root)}>
           <Container maxWidth="sm" className={clsx(className, styles.root)}>
             <Paper elevation={0} >
-              <h2>Twój koszyk jest pusty</h2>
+              <h2>Twój zamówienie jest puste</h2>
             </Paper>
           </Container>
         </div>
