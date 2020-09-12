@@ -2,3 +2,16 @@
 
 // .root {
 // }
+
+@media (max-width: 600px) {
+  .plantWrapper {
+    width: 100%!important;
+  }
+}
+
+@media (min-width: 600px) and (min-height: 750px) {
+  .root {
+    height: 85vh;
+  }
+}
+

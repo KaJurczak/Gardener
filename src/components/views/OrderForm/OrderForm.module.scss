@@ -1,6 +1,12 @@
 @import '../../../styles/settings.scss';
 
 .root {
+  padding: 10px;
+
+  .rootForm {
+    padding: 10px;
+  }
+
   .buttonWrapper {
     display: flex;
     justify-content: space-between;
@@ -9,6 +15,12 @@
 
   .button {
     background-color: $bkDeepGreen;
-    margin-top: 20px;
+    margin-top: 15px;
+  }
+}
+
+@media (min-width: 600px) and (min-height: 900px) {
+  .root {
+    height: 85vh;
   }
 }

@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-
 import styles from './Footer.module.scss';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    right: 0,
   },
   appBar: {
-    top: 'auto',
+    top: 0,
     bottom: 0,
   },
 }));
@@ -33,13 +30,11 @@ const Component = ({className, children}) => {
 
   return(
     <div className={clsx(className, styles.root)}>
-      <AppBar className={clsx(styles.footer, classes.appBar)} position="fixed" color="inherit">
-        <Toolbar>
-          <Typography className={classes.title}>
-            All rights reserved
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <BottomNavigation className={styles.footer} color="inherit">
+        <Typography className={clsx(classes.title, styles.title)}>
+          All rights reserved
+        </Typography>
+      </BottomNavigation>
     </div>
   );
 };
@@ -48,16 +43,6 @@ Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
 };
-
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   Component as Footer,

@@ -61,6 +61,7 @@ export const sendOrder = (order) => {
       .then(res => {
         dispatch(addOrder(order));
         localStorage.setItem(`cart`, JSON.stringify([]));
+        alert('Zamówienie zostało wysłane');
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));

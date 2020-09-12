@@ -1,7 +1,15 @@
 @import '../../../styles/settings.scss';
 
 .root {
+  flex-shrink: 0;
+
   .footer {
     background-color: $bkLightBrown;
+
+    .title {
+      text-align: left;
+      padding: 15px;
+      align-items: center;
+    }
   }
 }

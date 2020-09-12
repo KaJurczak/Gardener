@@ -63,7 +63,7 @@ class Component extends React.Component {
             <br></br>
             <h2>Formularz danych kontaktowych</h2>
             <Paper elevation={1} >
-              <div className={clsx(className, styles.root)}>
+              <div className={clsx(className, styles.rootForm)}>
                 <Grid
                   className={styles.container}
                   container
@@ -169,8 +169,6 @@ class Component extends React.Component {
                 Cofnij do koszyka
               </Button>
               <Button 
-                // component={Link} 
-                // to={'/orderForm'} 
                 color="inherit" 
                 className={styles.button}
                 onClick={() => onSubmit(order, plantsInCart)}

@@ -73,7 +73,7 @@ class Component extends React.Component {
             <Container maxWidth="sm" className={clsx(className, styles.root)}>
               <Paper elevation={0} >
                 <Grid container spacing={2} className={styles.card}>
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={3}>
                     <GridList cellHeight={160} className={classes.gridList} cols={1}>
                       {singlePlant.photo ? (singlePlant.photo.map((image) => (
                         <GridListTile key={image} cols={image.cols || 1}>
@@ -82,7 +82,7 @@ class Component extends React.Component {
                       ))) : ''}
                     </GridList>
                   </Grid>
-                  <Grid item xs={9}>
+                  <Grid item xs={12} sm={9}>
                     <Card className={classes.root}>
                       <CardActionArea>
                         <div className={styles.imageWrapper}>

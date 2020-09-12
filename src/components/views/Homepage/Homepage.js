@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 class Component extends React.Component {
 
   async componentDidMount(){
-    // console.log('componentDidMount() at homepage');
     const {fetchPlants} = this.props;
     await fetchPlants();
   }
@@ -57,7 +56,7 @@ class Component extends React.Component {
           <div className={classes.root}>
             <GridList cellHeight={180} className={classes.gridList}>
               {plants.map((plant) => (
-                <GridListTile key={plant._id} component={Link} to={`/plant/${plant._id}`}>
+                <GridListTile key={plant._id} className={styles.plantWrapper} component={Link} to={`/plant/${plant._id}`}>
                   <img src={plant.photo[0]} alt={plant.polishName} />
                   <GridListTileBar
                     title={plant.polishName}

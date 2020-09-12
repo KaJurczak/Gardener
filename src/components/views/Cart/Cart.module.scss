@@ -1,8 +1,16 @@
 @import '../../../styles/settings.scss';
 
 .root {
+  // height: 85vh;
+
   .button {
     background-color: $bkDeepGreen;
     margin-top: 10px;
+  }
+}
+
+@media (min-height: 600px) {
+  .root {
+    height: 85vh;
   }
 }
