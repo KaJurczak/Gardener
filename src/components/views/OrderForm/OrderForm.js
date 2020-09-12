@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/plantsRedux';
-import { getCart} from '../../../redux/cartRedux';
+import { getCart, sendOrder } from '../../../redux/cartRedux';
 import { OrderTable } from '../OrderTable/OrderTable';
 
 import styles from './OrderForm.module.scss';
@@ -39,9 +39,20 @@ class Component extends React.Component {
     console.log(this.state);
   };
 
+  onSubmit = async () => {
+    const { order } = this.state;
+    const { sendOrder, plantsInCart } = this.props;
+    plantsInCart ? 
+      ((order.imie && order.nazwisko && order.email && order.ulica && order.nrDomu && order.miasto && order.kodPocztowy) ? 
+        await sendOrder({ order, plantsInCart }) :
+        alert('Nie wpisano wszystkich danych adresowych')
+      ) 
+      : alert('Brak roślin w koszyku');
+  };
+
   render(){
-    const { className } = this.props;
-    const { changeInput } = this;
+    const { className, plantsInCart } = this.props;
+    const { changeInput, onSubmit } = this;
     const { order } = this.state;
 
     return(
@@ -161,7 +172,9 @@ class Component extends React.Component {
                 // component={Link} 
                 // to={'/orderForm'} 
                 color="inherit" 
-                className={styles.button} >
+                className={styles.button}
+                onClick={() => onSubmit(order, plantsInCart)}
+              >
                 Wyślij zamówienie
               </Button>
             </div>
@@ -176,6 +189,7 @@ Component.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object,
   plantsInCart: PropTypes.array,
+  sendOrder: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -184,6 +198,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  sendOrder: ({ order, plantsInCart }) => dispatch(sendOrder({ order, plantsInCart })),
   // setCartToLocalSt: (cart) => dispatch(setCartToLocalSt(cart)),
   // getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
 });

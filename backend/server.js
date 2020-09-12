@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 // const session = require('express-session');
 // const MongoStore = require('connect-mongo')(session);
 
-const router = require('./routes/plants.routes');
+const plantsRoutes = require('./routes/plants.routes');
+const orderRoutes = require('./routes/order.routes');
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /* API ENDPOINTS */
-app.use('/api', router);
+app.use('/api', plantsRoutes);
+app.use('/api', orderRoutes);
 
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {

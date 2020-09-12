@@ -1,4 +1,4 @@
-// import Axios from 'axios';
+import Axios from 'axios';
 
 /* selectors */
 export const getCart = ({cart}) => cart.data;
@@ -16,6 +16,7 @@ const ADD_TO_CART = createActionName('ADD_TO_CART');
 const CHANGE_VALUE = createActionName('CHANGE_VALUE');
 const CHANGE_SELECT = createActionName('CHANGE_SELECT');
 const REMOVE_PRODUCT = createActionName('REMOVE_PRODUCT');
+const ADD_ORDER = createActionName('ADD_ORDER');
 
 
 /* action creators */
@@ -27,6 +28,8 @@ export const addToCart = (payload, value) => ({ payload, value, type: ADD_TO_CAR
 export const changeValue = (payload) => ({ payload, type: CHANGE_VALUE });
 export const changeSelectValue = (payload) => ({ payload, type: CHANGE_SELECT });
 export const removeProduct = (payload) => ({ payload, type: REMOVE_PRODUCT });
+export const addOrder = (payload) => ({ payload, type: ADD_ORDER });
+
 
 
 /* thunk creators */
@@ -47,7 +50,22 @@ export const changeCartInLocalSt = (cart) => () => {
 export const getCartFromLocalSt = () => {
   return (dispatch) => {
     dispatch(fetchSuccess(JSON.parse(localStorage.getItem('cart'))));
-  };};
+  };
+};
+
+export const sendOrder = (order) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+    Axios
+      .post(`http://localhost:8000/api/order`, order)
+      .then(res => {
+        dispatch(addOrder(order));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
@@ -122,7 +140,13 @@ export const reducer = (statePart = [], action = {}) => {
         data: statePart.data.filter((item) => item._id !== action.payload),
       };
     }
-
+    case ADD_ORDER: {
+      return {
+        ...statePart,
+        data: [],
+        order: action.payload,
+      };
+    }
 
     default:
       return statePart;
