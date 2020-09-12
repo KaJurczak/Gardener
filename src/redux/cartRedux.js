@@ -60,6 +60,7 @@ export const sendOrder = (order) => {
       .post(`http://localhost:8000/api/order`, order)
       .then(res => {
         dispatch(addOrder(order));
+        localStorage.setItem(`cart`, JSON.stringify([]));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
