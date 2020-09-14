@@ -43,7 +43,7 @@ class Component extends React.Component {
 
   render(){
     const {className, children, plants, classes} = this.props;
-    console.log(plants);
+    console.log('plants', plants);
 
     return(
       <div>
@@ -55,26 +55,26 @@ class Component extends React.Component {
           <br></br>
           <h2>Wybrane produkty</h2>
           <div className={classes.root}>
-            {plants} ? (
-            <GridList cellHeight={180} className={classes.gridList}>
-              {plants.map((plant) => (
-                <GridListTile key={plant._id} className={styles.plantWrapper} component={Link} to={`/plant/${plant._id}`}>
-                  <img src={plant.photo[0]} alt={plant.polishName} />
-                  <GridListTileBar
-                    title={plant.polishName}
-                    subtitle={<span>price: {plant.price}PLN</span>}
-                    actionIcon={
-                      <IconButton aria-label={`info about ${plant.polishName}`} className={classes.icon}>
-                        <InfoIcon />
-                      </IconButton>
-                    }
-                  />
-                </GridListTile>
-              ))}
-            </GridList>
+            {plants ? (
+              <GridList cellHeight={180} className={classes.gridList}>
+                {plants.map((plant) => (
+                  <GridListTile key={plant._id} className={styles.plantWrapper} component={Link} to={`/plant/${plant._id}`}>
+                    <img src={plant.photo[0]} alt={plant.polishName} />
+                    <GridListTileBar
+                      title={plant.polishName}
+                      subtitle={<span>price: {plant.price}PLN</span>}
+                      actionIcon={
+                        <IconButton aria-label={`info about ${plant.polishName}`} className={classes.icon}>
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </GridListTile>
+                ))}
+              </GridList>
             ) : (
-            <p>Galeria już wkrótce</p>
-            )
+              <p>Galeria już wkrótce</p>
+            )}
           </div>
           {children}
         </Container>
