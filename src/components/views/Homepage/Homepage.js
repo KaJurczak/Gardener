@@ -43,7 +43,6 @@ class Component extends React.Component {
 
   render(){
     const {className, children, plants, classes} = this.props;
-    console.log('plants', plants);
 
     return(
       <div>

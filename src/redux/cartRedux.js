@@ -32,7 +32,6 @@ export const removeProduct = (payload) => ({ payload, type: REMOVE_PRODUCT });
 export const addOrder = (payload) => ({ payload, type: ADD_ORDER });
 
 
-
 /* thunk creators */
 
 export const setCartToLocalSt = (cart, value) => () => {
