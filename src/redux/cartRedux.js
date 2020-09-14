@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { API_URL } from '../apiData';
 
 /* selectors */
 export const getCart = ({cart}) => cart.data;
@@ -57,7 +58,7 @@ export const sendOrder = (order) => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
     Axios
-      .post(`http://localhost:8000/api/order`, order)
+      .post(`${API_URL}/order`, order)
       .then(res => {
         dispatch(addOrder(order));
         localStorage.setItem(`cart`, JSON.stringify([]));

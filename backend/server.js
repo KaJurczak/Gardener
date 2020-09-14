@@ -31,11 +31,7 @@ app.use('*', (req, res) => {
 });
 
 /* MONGOOSE */
-console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-// const dbURI =`mongodb+srv://gardUser:gardUser@cluster0.iegdp.gcp.mongodb.net/gardenerDB?retryWrites=true&w=majority`;
-
 const dbURI = process.env.NODE_ENV === `production` ? `mongodb+srv://gardUser:gardUser@cluster0.iegdp.gcp.mongodb.net/gardenerDB?retryWrites=true&w=majority` : `mongodb://localhost:27017/gardenerDB`;
-
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;

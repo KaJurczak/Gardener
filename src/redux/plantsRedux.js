@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { API_URL } from '../apiData';
 
 /* selectors */
 export const getAll = ({plants}) => {
@@ -26,7 +27,7 @@ export const fetchPlants = () => {
     dispatch(fetchStarted());
 
     Axios
-      .get(`http://localhost:8000/api/plants`)
+      .get(`${API_URL}/plants`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })
