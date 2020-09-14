@@ -55,7 +55,7 @@ class Component extends React.Component {
           <br></br>
           <h2>Wybrane produkty</h2>
           <div className={classes.root}>
-            {plants ? (
+            {plants.length !== 0 ? (
               <GridList cellHeight={180} className={classes.gridList}>
                 {plants.map((plant) => (
                   <GridListTile key={plant._id} className={styles.plantWrapper} component={Link} to={`/plant/${plant._id}`}>
