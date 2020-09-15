@@ -1,20 +1,55 @@
 @import '../../../styles/settings.scss';
 
 .root {
-  // flex-shrink: 0;
   margin-top: 5px;
 
   .footer {
     background-color: $bkLightBrown;
-    height: 56px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    text-align: center;
+    padding: 5px 20px;
+    flex-wrap: wrap;
 
-    .title {
-      text-align: left;
-      padding: 5px 15px;
-      align-items: center;
-      flex-grow: 1;
+    .copyright {
+      margin: auto 0;
     }
+
+    .socialMedia {
+      margin: auto auto;
+
+      ul {
+        list-style: none;
+        display: flex;
+        padding-inline-start: 0;
+
+        a {
+          color: $textMain;
+          margin: 0 10px;
+
+          &:hover {
+            color: $textGreen;
+          }
+        }
+      }
+    }
+
+    .adress {
+      ul {
+        list-style: none;
+        padding-inline-start: 0;
+      }
+    }
+
+    ul {
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
   }
 }
