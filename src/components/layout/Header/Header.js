@@ -25,9 +25,6 @@ const useStyles = makeStyles((theme) => ({
   // root: {
   //   flexGrow: 1,
   // },
-  // menuButton: {
-  //   marginRight: theme.spacing(2),
-  // },
   title: {
     flexGrow: 1,
   },
@@ -46,7 +43,6 @@ class Component extends React.Component {
 
   render(){
     const {className, classes  } = this.props;
-    // console.log('plantsInCart', plantsInCart);
     // console.log('JSON.parse(localStorage.getItem())', JSON.parse(localStorage.getItem('cart')));
     const cartNumber = 0;
     // const cartNumber = JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')).length : 0;
@@ -61,7 +57,6 @@ class Component extends React.Component {
             <Typography className={clsx(classes.title, styles.logo)} component={Link} to={`/`} color="inherit" underline="hover">
               GARDENER
             </Typography>
-            {/* <Button color="inherit" className={styles.button}>OFERTA</Button> */}
             <Button component={Link} to={'/cart'} color="inherit" className={styles.button}>
               <div className={classes.rootCart}>
                 <Badge badgeContent={cartNumber} color="secondary">
@@ -92,7 +87,6 @@ const mapDispatchToProps = dispatch => ({
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));
 
 export {
-  // Component as Header,
   ContainerConnect as Header,
   Component as HeaderComponent,
 };

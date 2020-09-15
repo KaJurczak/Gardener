@@ -2,14 +2,19 @@
 
 .root {
   // flex-shrink: 0;
+  margin-top: 5px;
 
   .footer {
     background-color: $bkLightBrown;
+    height: 56px;
+    display: flex;
+    justify-content: center;
 
     .title {
       text-align: left;
-      padding: 15px;
+      padding: 5px 15px;
       align-items: center;
+      flex-grow: 1;
     }
   }
 }

@@ -7,7 +7,6 @@ router.get('/plants', async (req, res) => {
   try {
     const result = await Plant
       .find();
-      // .select('polishName photo price');
     if(!result) res.status(404).json({ post: 'Not found' });
     else res.json(result);
   }

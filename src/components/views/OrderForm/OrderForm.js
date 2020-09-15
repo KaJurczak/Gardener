@@ -197,15 +197,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   sendOrder: ({ order, plantsInCart }) => dispatch(sendOrder({ order, plantsInCart })),
-  // setCartToLocalSt: (cart) => dispatch(setCartToLocalSt(cart)),
-  // getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
 });
 
 const ContainerConnect = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 
 export {
-  // Component as OrderForm,
   ContainerConnect as OrderForm,
   Component as OrderFormComponent,
 };

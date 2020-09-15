@@ -118,16 +118,10 @@ const mapStateToProps = state => ({
   plantsInCart: getCart(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   setCartToLocalSt: (cart) => dispatch(setCartToLocalSt(cart)),
-//   getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
-// });
-
 const ContainerConnect = connect(mapStateToProps)(Component);
 
 
 export {
-  // Component as OrderTable,
   ContainerConnect as OrderTable,
   Component as OrderTableComponent,
 };

@@ -205,7 +205,6 @@ const mapDispatchToProps = dispatch => ({
 const ContainerConnect = withStyles(useStyles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Component));
 
 export {
-  // Component as Cart,
   ContainerConnect as Cart,
   Component as CartComponent,
 };
