@@ -1,6 +1,6 @@
-const cacheName = 'app-name';
+const cacheName = 'gardener';
 const filesToCache = [
-  '/',
+  './public/index.html',
 ];
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
