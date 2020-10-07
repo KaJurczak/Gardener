@@ -20,14 +20,14 @@ import TextField from '@material-ui/core/TextField';
 class Component extends React.Component {
   state = {
     order: {
-      imie: '',
-      nazwisko: '',
+      firstName: '',
+      lastName: '',
       email: '',
-      ulica: '',
-      nrDomu: '',
-      miasto: '',
-      kodPocztowy: '',
-      dodatkoweInfo: '',
+      street: '',
+      houseNumber: '',
+      city: '',
+      postcode: '',
+      addInfo: '',
     },
   };
 
@@ -43,7 +43,7 @@ class Component extends React.Component {
     const { order } = this.state;
     const { sendOrder, plantsInCart } = this.props;
     plantsInCart ? 
-      ((order.imie && order.nazwisko && order.email && order.ulica && order.nrDomu && order.miasto && order.kodPocztowy) ? 
+      ((order.firstName && order.lastName && order.email && order.street && order.houseNumber && order.city && order.postcode) ? 
         await sendOrder({ order, plantsInCart }) :
         alert('Nie wpisano wszystkich danych adresowych')
       ) 
@@ -72,23 +72,23 @@ class Component extends React.Component {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id="imie"
-                      name="imie"
-                      label="Imie"
+                      id="firstName"
+                      name="firstName"
+                      label="Imię"
                       fullWidth
-                      value={order.imie}
-                      onChange={(e) => changeInput(e, 'imie')}
+                      value={order.firstName}
+                      onChange={(e) => changeInput(e, 'firstName')}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id="nazwisko"
-                      name="nazwisko"
+                      id="lastName"
+                      name="lastName"
                       label="Nazwisko"
                       fullWidth
-                      value={order.nazwisko}
-                      onChange={(e) => changeInput(e, 'nazwisko')}
+                      value={order.lastName}
+                      onChange={(e) => changeInput(e, 'lastName')}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -105,56 +105,56 @@ class Component extends React.Component {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id="ulica"
-                      name="ulica"
+                      id="street"
+                      name="street"
                       label="Ulica"
                       fullWidth
-                      value={order.ulica}
-                      onChange={(e) => changeInput(e, 'ulica')}
+                      value={order.street}
+                      onChange={(e) => changeInput(e, 'street')}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id="nrDomu"
-                      name="nrDomu"
+                      id="houseNumber"
+                      name="houseNumber"
                       label="Nr domu"
                       fullWidth
-                      value={order.nrDomu}
-                      onChange={(e) => changeInput(e, 'nrDomu')}
+                      value={order.houseNumber}
+                      onChange={(e) => changeInput(e, 'houseNumber')}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id="miasto"
-                      name="miasto"
+                      id="city"
+                      name="city"
                       label="Miasto"
                       fullWidth
-                      value={order.miasto}
-                      onChange={(e) => changeInput(e, 'miasto')}
+                      value={order.city}
+                      onChange={(e) => changeInput(e, 'city')}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      id="kodPocztowy"
-                      name="kodPocztowy"
+                      id="postcode"
+                      name="postcode"
                       label="Kod pocztowy"
                       fullWidth
-                      value={order.kodPocztowy}
-                      onChange={(e) => changeInput(e, 'kodPocztowy')}
+                      value={order.postcode}
+                      onChange={(e) => changeInput(e, 'postcode')}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="dodatkoweInfo"
-                      name="dodatkoweInfo"
+                      id="addInfo"
+                      name="addInfo"
                       label="Dodatkowe informacje"
                       multiline
                       fullWidth
-                      value={order.dodatkoweInfo}
-                      onChange={(e) => changeInput(e, 'dodatkoweInfo')}
+                      value={order.addInfo}
+                      onChange={(e) => changeInput(e, 'addInfo')}
                     />
                   </Grid>
                 </Grid>

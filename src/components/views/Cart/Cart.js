@@ -56,7 +56,7 @@ class Component extends React.Component {
 
     const changeSelect = (event, _id) => {
       event.preventDefault();
-      changeSelectValue({_id, choosenColor: event.target.value});
+      changeSelectValue({_id, chosenColor: event.target.value});
     };
 
     const changeInput = (event, _id) => {
@@ -109,12 +109,12 @@ class Component extends React.Component {
                             <Select
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
-                              // defaultValue={row.choosenColor ? row.choosenColor : row.colors}
+                              // defaultValue={row.chosenColor ? row.chosenColor : row.colors}
                               onChange={e => changeSelect(e, row._id)}
                             >
-                              {row.colors.map(choosenColor => 
-                                <MenuItem key={choosenColor} value={choosenColor}>
-                                  {choosenColor}
+                              {row.colors.map(chosenColor => 
+                                <MenuItem key={chosenColor} value={chosenColor}>
+                                  {chosenColor}
                                 </MenuItem>
                               )}
                             </Select>
@@ -196,7 +196,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   changeValue: ({_id, value}) => dispatch(changeValue({_id, value})), 
-  changeSelectValue: ({_id, choosenColor}) => dispatch(changeSelectValue({_id, choosenColor})),
+  changeSelectValue: ({_id, chosenColor}) => dispatch(changeSelectValue({_id, chosenColor})),
   getCartFromLocalSt: () => dispatch(getCartFromLocalSt()),
   changeCartInLocalSt: (cart) => dispatch(changeCartInLocalSt(cart)),
   removeProduct: (_id) => dispatch(removeProduct(_id)),

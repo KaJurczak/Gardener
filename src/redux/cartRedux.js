@@ -131,7 +131,7 @@ export const reducer = (statePart = [], action = {}) => {
       return {
         ...statePart,
         data: statePart.data.map((product) => {
-          if (product._id === action.payload._id) return { ...product, choosenColor: action.payload.choosenColor };
+          if (product._id === action.payload._id) return { ...product, chosenColor: action.payload.chosenColor };
           return product;
         }),
       };

@@ -16,8 +16,8 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 
-function createData(name, choosenColor, price, value, total, id) {
-  return { name, choosenColor, price, value, total, id };
+function createData(name, chosenColor, price, value, total, id) {
+  return { name, chosenColor, price, value, total, id };
 }
 
 class Component extends React.Component {
@@ -25,7 +25,7 @@ class Component extends React.Component {
   render(){
     const {plantsInCart} = this.props;
 
-    const rows = plantsInCart ? plantsInCart.map(plant => createData(plant.polishName, plant.choosenColor?plant.choosenColor:'', plant.price, plant.value, plant.price*plant.value, plant.id)) : [];
+    const rows = plantsInCart ? plantsInCart.map(plant => createData(plant.polishName, plant.chosenColor?plant.chosenColor:'', plant.price, plant.value, plant.price*plant.value, plant.id)) : [];
 
     const totalPrice = () => {
       let sum = [];
@@ -58,7 +58,7 @@ class Component extends React.Component {
                     <TableCell component="th" scope="row">
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.choosenColor ? row.choosenColor : 'nie wybrano koloru'}</TableCell>
+                    <TableCell align="right">{row.chosenColor ? row.chosenColor : 'nie wybrano koloru'}</TableCell>
                     <TableCell align="right">{row.price}</TableCell>
                     <TableCell align="right">{row.value}</TableCell>
                     <TableCell align="right">{row.total}</TableCell>

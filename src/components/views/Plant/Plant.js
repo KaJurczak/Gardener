@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 class Component extends React.Component {
   state = {
     data: {
-      value: 0,
+      value: 1,
     },
   }
 

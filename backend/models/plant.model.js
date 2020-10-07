@@ -9,7 +9,7 @@ const plantSchema = new mongoose.Schema({
   source: { type: String, required: true},
   height: { type: String},
   colors: { type: Array },
-  choosenColor: { type: String},
+  chosenColor: { type: String},
   floweringDate: { type: String},
   conditions: { type: String},
   cutting: { type: String},
