@@ -25,7 +25,6 @@ export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchPlants = () => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-
     Axios
       .get(`${API_URL}/plants`)
       .then(res => {

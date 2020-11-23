@@ -2,7 +2,7 @@
 You can find here simple shop with plants. 
 
 ### Page:
-https://gardener-app.herokuapp.com/
+https://gardenershop-beaa8.web.app/
 
 ### How to open locally:
 yarn install && yarn start  <br />

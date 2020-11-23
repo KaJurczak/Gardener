@@ -49,7 +49,7 @@ class Component extends React.Component {
         <Container maxWidth="sm" className={clsx(className, styles.root)}>
           <h2>O sobie</h2>
           <p>W obecnym kształcie na stronie można znaleść sklep internetowy z roślinami ogrodowymi. 
-          Docelowo ma to byc jednak narzędzie dla autorki - poczatkującej ogrodniczki, wskazujące terminy cięcia roślin, sposób nawożenia i parę innych przydatnych informacji. Całość z dodanymi filtrami ułatwiającymi pracę.
+          Docelowo ma to byc jednak narzędzie dla autorki - poczatkującej ogrodniczki, wskazujące terminy cięcia roślin, sposób nawożenia i parę innych przydatnych informacji. 
           </p>
           <br></br>
           <h2>Wybrane produkty</h2>
@@ -72,7 +72,7 @@ class Component extends React.Component {
                 ))}
               </GridList>
             ) : (
-              <p>Galeria już wkrótce</p>
+              <p>Ładowanie galerii</p>
             )}
           </div>
           {children}
